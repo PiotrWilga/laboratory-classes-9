@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-const { mongoConnect } = require("./database"); // <- Ścieżka do pliku
+const { mongoConnect } = require("./database");
 const bookRoutes = require("./routes/bookRoutes");
 const authorRoutes = require("./routes/authorRoutes");
 
@@ -22,4 +22,9 @@ mongoConnect(() => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
+});
+
+
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
 });

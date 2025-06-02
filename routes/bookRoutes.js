@@ -1,9 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const {
+  getAllBooks,
+  addBook,
+  deleteBook
+} = require('../controllers/bookControllers');
 
-// tymczasowy handler
-router.get("/", (req, res) => {
-  res.json({ message: "Books endpoint works!" });
-});
+router.get('/', getAllBooks);
+
+router.post('/', addBook);
+
+router.delete('/:id', deleteBook);
 
 module.exports = router;

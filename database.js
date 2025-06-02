@@ -1,22 +1,27 @@
-const { DB_USER, DB_PASS } = require("./config");
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+const { MongoClient } = require("mongodb");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 let database;
 
 const mongoConnect = (callback) => {
-  MongoClient.connect(`mongodb+srv://pwilga:E4pvFGHxlKMdUexe@piotrw.vhhn8wn.mongodb.net/?retryWrites=true&w=majority&appName=PiotrW`)
+  const uri = process.env.MONGO_URI;
+
+  MongoClient.connect(uri)
     .then((client) => {
       console.log("Connected!");
       database = client.db("Library");
       callback();
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.error("Failed to connect to MongoDB:", error);
+    });
 };
 
 const getDatabase = () => {
   if (!database) {
-    throw "No database found!";
+    throw new Error("No database found!");
   }
 
   return database;

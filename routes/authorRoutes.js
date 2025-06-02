@@ -1,8 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const {
+  getAllAuthors,
+  updateAuthor,
+  addAuthor
+} = require('../controllers/authorControllers');
 
-router.get("/", (req, res) => {
-  res.json({ message: "Authors endpoint works!" });
-});
+router.get('/', getAllAuthors);
+
+router.put('/:id', updateAuthor);
+
+router.post('/', addAuthor);
 
 module.exports = router;
